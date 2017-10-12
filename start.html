@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookCan</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <script src="./assets/flat-ui.min.js"></script>
+    <!--加载数据的文件-->
+    <script src="getdata2.js"></script>
+    <!--echarts图表库-->
+    <script src="./assets/echarts.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/flat-ui.min.css">
+    
+    
+</head>
+<body> 
+  
+    <!-- Static navbar -->
+    <!--<div ng-app="myApp" ng-controller="mycontroller" ng-init="author='dzzxjl'">
+      <p>{{myUrl}}</p>
+    </div>-->
+    <div ng-app="myApp" ng-controller="siteCtrl" ng-init="author='dzzxjl'">
+      <!--ng-app 指令初始化一个 AngularJS 应用程序-->
+    <div class="container">
+    <nav class="navbar navbar-default navbar-lg">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">
+          <span class="fui-list-large-thumbnails"></span>
+          BookCan书罐
+          </a>
+        </div>
+        <!--折叠-->
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="./start.html">主页</a></li>
+            <li><a href="./forum.html">讨论区</a></li>
+            <li><a href="http://dzzxjl.github.io/2014/12/30/2014%E8%AF%BB%E4%B9%A6%E8%AE%B0%E5%BF%86/">2014读书记忆</a></li>
+            <li><a href="http://dzzxjl.github.io/BookCan">GitHub</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-right"><a>&nbsp</a></li>
+            <li class="navbar-right"><a href="" ng-click="toggle()">关于</a></li>      
+            <li class="navbar-right"><a href="" id="a_login">登录</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+      <div ng-hide="var1">
+        <h2>关于</h2>
+        <p>白纸黑字，没有色彩，规规矩矩，囿于方块之间，却饱含着力量，致使我相信文字是这个世界上最伟大的发明之一。我现在努力着去花出更多的时间读书，与此同时，我也不会拒绝新媒体，因为时代在进步，科技带来的好处远远大于弊处。</p>
+      </div>
+
+      <div id="login">
+        <form  name="formlogin" class="form-signin">
+          <label for="inputEmail" class="sr-only">邮箱地址</label>
+          <input name="email" type="email" id="inputEmail" class="form-control flat" placeholder="邮箱地址" required autofocus>
+          <label for="inputPassword" class="sr-only">密码</label>
+          <input name="password" type="password" id="inputPassword" class="form-control flat" placeholder="密码" required>
+          <button id="btnsignin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          <br>
+        </form>
+      </div>
+
+      <div id="main" style="display: none;">
+      <ul class="nav nav-tabs">
+        <li id="liid0" role="presentation" class="active"><a ng-click="btn1(3)" role="button">全部</a></li>
+        <li id="liid1" role="presentation" class=""><a ng-click="btn1(0)" role="button">在读</a></li>
+        <li id="liid2" role="presentation" class=""><a ng-click="btn1(1)" role="button">想读</a></li>
+        <li id="liid3" role="presentation" class=""><a ng-click="btn1(2)"role="button">已读</a></li>
+        <!--<li class="pull-right">个人简介: {{user.description}}</li>-->
+      </ul>
+      <br>
+          <p>当前书罐中书的总数： {{count}}</p>
+        <table id="table" class="table table-hover">
+          
+          <tr>
+              <td class="active">序号</td>
+              <td class="active">书名</td>
+              <td class="active">详情</td>
+              <td class="active">亚马逊</td> 
+              <td class="active">标签</td>
+              <td class="active">删除</td>   
+          </tr>
+          <tr id="book" ng-repeat="x in books">
+          <td>{{ x.bid }}</td>
+          <!--过滤器使数据输出全为小写-->
+          <!-- <td>{{ x.name | lowercase}}</td>    -->
+          <td>{{ x.name }}</td>
+          <td><button type="button" value="{{x.bid}}" class="btn btn-primary" onclick="tiaozhuan(value)">查看<span class="fui-export"></span></button></td>
+          <td><button type="button" value="{{x.name}}" class="btn btn-primary" onclick="buy(value)">购买<span class="fui-export"></span></button></td>
+          <!--<td><a href="https://www.amazon.cn/s/ref=nb_sb_noss?__mk_zh_CN=亚马逊网站&url=search-alias%3Daps&field-keywords={{ x.name }}">链接</a></td>-->
+          <td>{{ x.tag }}</td>
+          <td><button type="button" value="{{x.bid}}" class="btn btn-danger" onclick="shanchu(value)"><span class="fui-alert-circle"></span>删除</button></td>
+          </tr>
+        </table>
+        <hr>
+        <!--添加新书模块-->
+        <form name="myform" class="form-inline" onsubmit="return validateForm()" method="post">   
+          <p>添加新书</p>
+          <!--表单中包含用户的email，表单中不显示-->
+          <input type="hidden" name="email" value="{{email}}" />
+
+          <input type="text" name="name" class="form-control" id="exampleInputAmount" placeholder="书名">
+          <!--<input type="text" name="tag" class="form-control" id="exampleInputAmount" placeholder="标签">-->
+          <input type="text" name="status" class="form-control" placeholder="ps">
+          &nbsp
+
+          <select name="tag" class="form-control select select-primary select-block ">
+          <option value="传记">传记</option>
+          <option value="科技">科技</option>
+          <option value="编程" selected>编程</option>
+          <option value="小说">小说</option>
+          <option value="财经科普">财经科普</option>
+          </select>
+          &nbsp
+          <select name="inlineRadioOptions" class="form-control select select-primary select-block ">
+          <option value="0">在读</option>
+          <option value="1" selected>想读</option>
+          <option value="2">已读</option>
+          </select>
+          &nbsp
+          <!--<button id="btn" type="button" class="btn btn-primary">提交</button>-->
+          <button type="button" class="btn btn-primary" ng-click="add()">提交</button>
+        </form>
+        <hr>
+        <!--书罐可视化模块-->
+        <p>书罐可视化</p>
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div id="echart" style="width: 600px;height:400px;"></div>
+
+      </div>
+    <hr>
+    
+
+  <footer class="footer">
+    <p>© 2017 BookCan, Inc.</p>
+  </footer> 
+</div>
+</div> <!-- /container -->
+
+ <script>
+    // select option动态效果
+    $("select").select2({dropdownCssClass: 'dropdown-inverse'});
+</script>
+
+	
+</body>
+</html>
