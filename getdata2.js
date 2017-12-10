@@ -138,7 +138,12 @@ app.controller('siteCtrl', function($scope, $http) {
                 if(!data){
                     alert("此书数据库已存在");        
                 } else {
+                    $scope.books = response.data;
                     $scope.books = data;
+                    // 添加book后，及时更新数据
+                    books = data;
+                    console.log(data);
+                    console.log(books);
                     document.getElementById("liid0").className="active";
                     document.getElementById("liid1").className="";
                     document.getElementById("liid2").className="";
